@@ -114,7 +114,7 @@ export const characterColumns: ColumnDef<Character>[] = [
                     return <span key={index}>Erro ao carregar</span>;
                   }
                   return (
-                    <div className="badge bg-primary text-white dark:bg-accent">
+                    <div key={index} className="badge bg-primary text-white dark:bg-accent">
                       {specieQuery.data.name}
                     </div>
                   );

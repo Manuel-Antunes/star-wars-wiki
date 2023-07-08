@@ -215,7 +215,7 @@ const ShowCharacter: React.FC = () => {
                   <ul className="list-inside space-y-2">
                     {starships.length ? (
                       starships?.map(starship => (
-                        <li>
+                        <li key={getIdFromResourceUrl(starship.url)}>
                           <div className="text-teal-600">
                             <a href="#" title="Em breve">
                               {starship.name}
@@ -256,7 +256,7 @@ const ShowCharacter: React.FC = () => {
                   <ul className="list-inside space-y-2">
                     {vehicles.length ? (
                       vehicles?.map(vehicle => (
-                        <li>
+                        <li key={getIdFromResourceUrl(vehicle.url)}>
                           <div className="text-teal-600">{vehicle.name}</div>
                           <div className="text-gray-500 text-xs">
                             {vehicle.model}
@@ -295,7 +295,7 @@ const ShowCharacter: React.FC = () => {
                   <ul className="list-inside space-y-2">
                     {species.length ? (
                       species?.map(specie => (
-                        <li>
+                        <li key={getIdFromResourceUrl(specie.url)}>
                           <div className="text-teal-600">{specie.name}</div>
                           <div className="text-gray-500 text-xs">
                             {specie.classification}
@@ -337,6 +337,7 @@ const ShowCharacter: React.FC = () => {
             <div className="flex flex-wrap gap-2 justify-center md:justify-between overflow-y-auto">
               {movies.map(movie => (
                 <Link
+                  key={getIdFromResourceUrl(movie.url)}
                   to={`/movies/${getIdFromResourceUrl(movie.url)}`}
                   className="text-center my-2"
                 >

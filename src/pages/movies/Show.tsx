@@ -7,7 +7,7 @@ import { Movie } from "~/@types/models/Movie";
 import { Planet } from "~/@types/models/Planet";
 import OpeningCraw from "~/components/organisms/OpeningCraw";
 import MainLayout from "~/layouts/MainLayout";
-import { api, generateMovieImageFromId } from "~/services/api";
+import { api, generateMovieImageFromId, getIdFromResourceUrl } from "~/services/api";
 
 const ShowMovie: React.FC = () => {
   const { id } = useParams();
@@ -149,7 +149,7 @@ const ShowMovie: React.FC = () => {
                   <ul className="list-inside space-y-2 overflow-y-auto">
                     {characters.length ? (
                       characters?.map(character => (
-                        <li>
+                        <li key={getIdFromResourceUrl(character.url)}>
                           <div className="text-teal-600">{character.name}</div>
                         </li>
                       ))
@@ -183,7 +183,7 @@ const ShowMovie: React.FC = () => {
                   <ul className="list-inside space-y-2">
                     {planets.length ? (
                       planets?.map(planet => (
-                        <li>
+                        <li key={getIdFromResourceUrl(planet.url)}>
                           <div className="text-teal-600">
                             <a href="#" title="Em breve">
                               {planet.name}
