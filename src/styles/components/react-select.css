@@ -1,0 +1,76 @@
+
+.react-select__control {
+   @apply !rounded-lg border-slate-300 font-inter font-medium outline-none
+    transition duration-300 ease-in-out hover:border-slate-400 dark:border-navy-450
+    dark:bg-navy-700 dark:!text-navy-100 dark:hover:!border-navy-400;
+}
+
+.input-active .react-select__control {
+   @apply border-primary dark:border-accent;
+}
+
+.react-select__menu,
+.react-select__control,
+.react-select__single-value,
+.react-select__control input {
+   @apply text-sm leading-normal placeholder:!text-slate-400/70 !text-slate-600 dark:!text-navy-100;
+}
+
+.react-select__multi-value {
+   @apply rounded !bg-slate-150 !text-slate-800 dark:!bg-navy-500 dark:!text-navy-50;
+}
+
+.react-select__multi-value__label{
+    @apply !text-slate-800 dark:!text-navy-50;
+}
+
+.react-select__menu {
+   @apply rounded-md overflow-hidden shadow-none dark:bg-navy-700 border-slate-150 dark:border-navy-600 !p-0 !z-50;
+}
+
+.react-select__menu .create {
+   @apply text-slate-600 dark:text-navy-100;
+}
+
+.react-select__menu .create:hover,
+.react-select__menu .react-select__option:hover,
+.react-select__menu .react-select__option--is-selected,
+.react-select__menu .active {
+   @apply text-white !bg-primary dark:!bg-accent;
+}
+
+.react-select__menu .react-select__menu-list {
+  @apply p-0;
+}
+
+.react-select__multi-value__remove {
+  @apply !border-slate-300 dark:!border-navy-400 border-0 border-l hover:dark:!bg-navy-600/50;
+}
+
+.react-select__menu .react-select__option {
+  @apply dark:bg-navy-700 dark:!text-navy-100 dark:hover:!border-navy-400 p-1.5;
+}
+
+.react-select__menu .create:hover.create,
+.react-select__menu .react-select__option:hover.create,
+.react-select__menu .active.create {
+   @apply text-white;
+}
+
+.react-select__indicators > * {
+  @apply !text-slate-600;
+}
+
+.react-select__control,
+.ts-wrapper.single.input-active .react-select__control {
+   @apply bg-transparent;
+}
+
+.ts-wrapper.single .react-select__control,
+.ts-wrapper.single.input-active .react-select__control {
+   @apply bg-no-repeat bg-center pr-9;
+   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 20 20'%3e%3cpath stroke='%235C6B8A' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+   background-position: right 0.5rem center;
+   background-size: 1.5em 1.5em;
+   print-print-color-adjust: exact;
+}
