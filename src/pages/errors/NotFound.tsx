@@ -1,7 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
+import ufoDark from '~/assets/images/illustrations/ufo-dark.svg'
 import ufo from '~/assets/images/illustrations/ufo.svg'
-import ufoDark from '~/assets/images/ilustrations/ufo-dark.svg'
 
 const NotFound: React.FC = () => (
     <div className="dark">
