@@ -278,9 +278,9 @@ const ShowCharacter: React.FC = () => {
                     )}
                     alt={movie.title}
                   />
-                  <a href="#" className="text-main-color">
+                  <span className="text-main-color">
                     {movie.title}
-                  </a>
+                  </span>
                 </Link>
               ))}
             </div>

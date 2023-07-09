@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Helmet } from "react-helmet";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Movie } from "~/@types/models/Movie";
 import OpeningCraw from "~/components/organisms/OpeningCraw";
 import { useMovieProjection } from "~/hooks/pages/useMovieProjection";
@@ -127,7 +127,15 @@ const ShowMovie: React.FC = () => {
                     {characters.length ? (
                       characters?.map(character => (
                         <li key={getIdFromResourceUrl(character.url)}>
-                          <div className="text-teal-600">{character.name}</div>
+                          <Link
+                            to={`/characters/${getIdFromResourceUrl(
+                              character.url
+                            )}`}
+                          >
+                            <div className="text-teal-600">
+                              {character.name}
+                            </div>
+                          </Link>
                         </li>
                       ))
                     ) : (
