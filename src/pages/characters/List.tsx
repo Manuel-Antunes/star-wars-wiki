@@ -15,6 +15,7 @@ import { characterColumns } from "~/components/organisms/columns/characterColumn
 import CharacterFilters from "~/components/organisms/filters/CharacterFilter";
 import { useDataTable } from "~/hooks/useDataTable";
 import MainLayout from "~/layouts/MainLayout";
+import { API_BASE_URL } from "~/services/api";
 
 const ListCharacters = () => {
   const table = useDataTable<Character>(
@@ -33,7 +34,7 @@ const ListCharacters = () => {
         if(character.species.length === 0) {
           return {
             ...character,
-            species: ["https://swapi.dev/api/species/1/"],
+            species: [`${API_BASE_URL}/species/1/`],
           };
         }
         return {

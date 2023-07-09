@@ -1,7 +1,9 @@
 import axios from "axios";
 
+export const API_BASE_URL = "https://swapi.dev/api";
+
 export const api = axios.create({
-  baseURL: "https://swapi.dev/api",
+  baseURL: API_BASE_URL,
   params: {
     format: "json",
   },
