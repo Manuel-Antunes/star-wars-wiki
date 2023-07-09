@@ -30,16 +30,8 @@ html.dark {
   @apply [color-scheme:dark];
 }
 
-.cloak {
-  @apply !hidden;
-}
-
 body {
   @apply bg-slate-50 font-sans text-sm leading-5 antialiased [text-rendering:optimizeLegibility] dark:bg-navy-900 dark:[color-scheme:dark];
-}
-
-body.is-monochrome::before {
-  @apply pointer-events-none fixed inset-0 z-[999999] -m-[5rem] h-[calc(100%+10rem)] w-[calc(100%+10rem)] backdrop-grayscale backdrop-opacity-[.92] content-[''];
 }
 
 /* Preloader */
@@ -61,31 +53,6 @@ body.is-monochrome::before {
   50% {
     transform: scale(1.1);
   }
-}
-
-/* Sidebar Toggle Button */
-.sidebar-toggle span {
-  @apply h-[2px] w-5 translate-x-0 bg-current transition-all duration-[.25s] ease-in-out;
-}
-
-.sidebar-toggle span:nth-child(2) {
-  @apply w-3;
-}
-
-.is-sidebar-open .sidebar-toggle span {
-  @apply ml-2 w-[11px] -translate-x-2;
-}
-
-.is-sidebar-open .sidebar-toggle span:nth-child(1) {
-  @apply -rotate-45;
-}
-
-.is-sidebar-open .sidebar-toggle span:nth-child(2) {
-  @apply hidden;
-}
-
-.is-sidebar-open .sidebar-toggle span:nth-child(3) {
-  @apply rotate-45;
 }
 
 /* Sidebar */
@@ -157,37 +124,6 @@ nav.header .header-container {
   }
   to {
     transform: scale(1);
-  }
-}
-
-/* Mobile Searchbar */
-.mobile-searchbar {
-  @apply animate-[cubic-bezier(0,0,0.2,1)_mobile-searchbar_150ms_forwards];
-}
-
-.mobile-searchbar.animate\:leave {
-  @apply animate-[cubic-bezier(0,0,0.2,1)_mobile-searchbar-leave_150ms_forwards];
-}
-
-@keyframes mobile-searchbar {
-  from {
-    transform: scale(1.05);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes mobile-searchbar-leave {
-  from {
-    transform: scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: scale(0.95);
-    opacity: 0;
   }
 }
 
@@ -283,32 +219,4 @@ code.inline-code {
   .scrollbar-sm::-webkit-scrollbar-thumb:hover {
     @apply bg-slate-400 dark:bg-navy-300;
   }
-}
-
-/* React modal styles */
-
-.ReactModal__Overlay {
-  opacity: 0;
-  transition: opacity 200ms ease-in-out;
-}
-
-.ReactModal__Overlay--after-open {
-  opacity: 1;
-}
-
-.ReactModal__Overlay--before-close {
-  opacity: 0;
-}
-
-.ReactModal__Content {
-  scale: 0.6;
-  transition: scale 350ms ease-in-out;
-}
-
-.ReactModal__Content--after-open {
-  scale: 1;
-}
-
-.ReactModal__Content--before-close {
-  scale: 0.6;
 }
