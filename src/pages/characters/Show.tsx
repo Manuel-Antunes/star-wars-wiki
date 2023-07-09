@@ -1,13 +1,9 @@
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import Helmet from "react-helmet";
 import { Link, useParams } from "react-router-dom";
 import { Character } from "~/@types/models/Character";
-import { Movie } from "~/@types/models/Movie";
-import { Planet } from "~/@types/models/Planet";
-import { Specie } from "~/@types/models/Specie";
-import { Spaceship } from "~/@types/models/Starship";
-import { Vehicle } from "~/@types/models/Vehicle";
+import { useCharacterContent as useCharacterProjection } from "~/hooks/pages/useCharacterProjection";
 import MainLayout from "~/layouts/MainLayout";
 import {
   api,
@@ -30,74 +26,8 @@ const ShowCharacter: React.FC = () => {
     }
   );
 
-  const planetId = character?.homeworld.split("/").slice(-2)[0];
-
-  const { data: planet } = useQuery<Planet>(
-    ["planets", planetId],
-    async () => {
-      const response = await api.get(`/planets/${planetId}`);
-      return response.data;
-    },
-    {
-      suspense: true,
-    }
-  );
-
-  const starshipQueries = useQueries<Spaceship[]>({
-    queries:
-      character?.starships.map(starship => ({
-        queryKey: ["starships", starship.split("/").slice(-2)[0]],
-        queryFn: async () => {
-          const response = await api.get(starship);
-          return response.data;
-        },
-        suspense: true,
-      })) || [],
-  });
-
-  const starships = starshipQueries.map(query => query.data as Spaceship);
-
-  const vehicleQueries = useQueries<Vehicle[]>({
-    queries:
-      character?.starships.map(starship => ({
-        queryKey: ["vehicles", starship.split("/").slice(-2)[0]],
-        queryFn: async () => {
-          const response = await api.get(starship);
-          return response.data;
-        },
-        suspense: true,
-      })) || [],
-  });
-
-  const vehicles = vehicleQueries.map(query => query.data as Vehicle);
-
-  const movieQueries = useQueries<Movie[]>({
-    queries:
-      character?.films.map(movie => ({
-        queryKey: ["movies", movie.split("/").slice(-2)[0]],
-        queryFn: async () => {
-          const response = await api.get(movie);
-          return response.data;
-        },
-        suspense: true,
-      })) || [],
-  });
-
-  const movies = movieQueries.map(query => query.data as Movie);
-
-  const specieQueries = useQueries<Specie[]>({
-    queries:
-      character?.species.map(specie => ({
-        queryKey: ["species", specie.split("/").slice(-2)[0]],
-        queryFn: async () => {
-          const response = await api.get(specie);
-          return response.data;
-        },
-        suspense: true,
-      })) || [],
-  });
-
-  const species = specieQueries.map(query => query.data as Specie);
+  const { movies, planet, species, starships, vehicles } =
+    useCharacterProjection(character);
 
   return (
     <MainLayout>
@@ -111,7 +41,7 @@ const ShowCharacter: React.FC = () => {
               <div className="image overflow-hidden">
                 <img
                   className="h-auto w-2/3 mx-auto"
-                  src={generateCharacterImageFromId(id!)}
+                  src={generateCharacterImageFromId(id || "")}
                   alt=""
                 />
               </div>

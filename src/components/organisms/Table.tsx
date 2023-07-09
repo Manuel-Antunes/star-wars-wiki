@@ -1,12 +1,12 @@
 import { flexRender } from '@tanstack/react-table';
 import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
+import { DataTable } from '~/@types/table/DataTable';
 import TableSortLabel from '~/components/molecules/table/TableSortLabel';
-import { AdonisTable } from '~/hooks/useAdonisTable';
 import GrowSpinner from '~/partials/GrowSpinner';
 
 interface TableProps<T> {
-   table: AdonisTable<T>;
+   table: DataTable<T>;
    fallback?: React.ReactNode;
 }
 

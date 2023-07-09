@@ -10,11 +10,11 @@ import TableHeader from "~/components/molecules/table/TableHeader";
 import TableComponent from "~/components/organisms/Table";
 import { movieColumns } from "~/components/organisms/columns/movieColumns";
 import MovieFilter from "~/components/organisms/filters/MovieFilter";
-import { useAdonisTable } from "~/hooks/useAdonisTable";
+import { useDataTable } from "~/hooks/useDataTable";
 import MainLayout from "~/layouts/MainLayout";
 
 const ListMovies = () => {
-  const table = useAdonisTable<Movie>("/films", {
+  const table = useDataTable<Movie>("/films", {
     columns: movieColumns,
     manualPagination: true,
     getCoreRowModel: getCoreRowModel(),

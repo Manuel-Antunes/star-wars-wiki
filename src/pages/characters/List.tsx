@@ -1,7 +1,8 @@
 import {
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
-  getSortedRowModel
+  getSortedRowModel,
 } from "@tanstack/react-table";
 import { Suspense } from "react";
 import { Helmet } from "react-helmet";
@@ -12,17 +13,35 @@ import TablePagination from "~/components/molecules/table/TablePagination";
 import TableComponent from "~/components/organisms/Table";
 import { characterColumns } from "~/components/organisms/columns/characterColumns";
 import CharacterFilters from "~/components/organisms/filters/CharacterFilter";
-import { useAdonisTable } from "~/hooks/useAdonisTable";
+import { useDataTable } from "~/hooks/useDataTable";
 import MainLayout from "~/layouts/MainLayout";
 
 const ListCharacters = () => {
-  const table = useAdonisTable<Character>("/people", {
-    columns: characterColumns,
-    manualPagination: true,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-  });
+  const table = useDataTable<Character>(
+    "/people",
+    {
+      columns: characterColumns,
+      manualPagination: true,
+      getCoreRowModel: getCoreRowModel(),
+      getPaginationRowModel: getPaginationRowModel(),
+      getSortedRowModel: getSortedRowModel(),
+      getFilteredRowModel: getFilteredRowModel(),
+    },
+    undefined,
+    data => {
+      return data.map(character => {
+        if(character.species.length === 0) {
+          return {
+            ...character,
+            species: ["https://swapi.dev/api/species/1/"],
+          };
+        }
+        return {
+          ...character,
+        };
+      });
+    }
+  );
 
   const form = useForm();
 

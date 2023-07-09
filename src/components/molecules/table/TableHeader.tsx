@@ -3,10 +3,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { PropsWithChildren, useCallback, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { BsFilter } from "react-icons/bs";
-import { AdonisTable } from "~/hooks/useAdonisTable";
+import { DataTable } from "~/@types/table/DataTable";
 
 interface TableHeaderProps<T> extends PropsWithChildren {
-  table: AdonisTable<T>;
+  table: DataTable<T>;
 }
 
 const TableHeader = <T,>({ table, children }: TableHeaderProps<T>) => {
@@ -22,7 +22,6 @@ const TableHeader = <T,>({ table, children }: TableHeaderProps<T>) => {
 
   //* handlers
   const onSubmit = handleSubmit(formData => {
-    console.log(formData)
     table.setGlobalFilter((data: any) => ({ ...data, ...formData }));
   });
 

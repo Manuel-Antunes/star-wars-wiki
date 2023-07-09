@@ -1,13 +1,16 @@
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
-import { Character } from "~/@types/models/Character";
 import { Movie } from "~/@types/models/Movie";
-import { Planet } from "~/@types/models/Planet";
 import OpeningCraw from "~/components/organisms/OpeningCraw";
+import { useMovieProjection } from "~/hooks/pages/useMovieProjection";
 import MainLayout from "~/layouts/MainLayout";
-import { api, generateMovieImageFromId, getIdFromResourceUrl } from "~/services/api";
+import {
+  api,
+  generateMovieImageFromId,
+  getIdFromResourceUrl,
+} from "~/services/api";
 
 const ShowMovie: React.FC = () => {
   const { id } = useParams();
@@ -23,33 +26,7 @@ const ShowMovie: React.FC = () => {
     }
   );
 
-  const planetQueries = useQueries<Planet[]>({
-    queries:
-      movie?.planets.map(planet => ({
-        queryKey: ["planets", planet.split("/").slice(-2)[0]],
-        queryFn: async () => {
-          const response = await api.get(planet);
-          return response.data;
-        },
-        suspense: true,
-      })) || [],
-  });
-
-  const planets = planetQueries.map(query => query.data as Planet);
-
-  const characterQueries = useQueries<Character[]>({
-    queries:
-      movie?.characters.map(character => ({
-        queryKey: ["characters", character.split("/").slice(-2)[0]],
-        queryFn: async () => {
-          const response = await api.get(character);
-          return response.data;
-        },
-        suspense: true,
-      })) || [],
-  });
-
-  const characters = characterQueries.map(query => query.data as Character);
+  const { characters, planets } = useMovieProjection(movie);
 
   return (
     <MainLayout>
@@ -63,7 +40,7 @@ const ShowMovie: React.FC = () => {
               <div className="image overflow-hidden">
                 <img
                   className="h-auto w-2/3 mx-auto"
-                  src={generateMovieImageFromId(id!)}
+                  src={generateMovieImageFromId(id || "")}
                   alt=""
                 />
               </div>
@@ -124,7 +101,7 @@ const ShowMovie: React.FC = () => {
             </div>
             <div className="card h-full p-3 shadow-sm rounded-sm">
               <div className="grid grid-cols-3">
-              <div>
+                <div>
                   <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
                     <span className="text-green-500">
                       <svg

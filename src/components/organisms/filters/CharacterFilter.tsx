@@ -1,11 +1,11 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { Controller, useFormContext } from "react-hook-form";
 import Select from "react-select";
+import { StarWarsApiPaginatedRequest } from "~/@types/api/StarWarsApiPaginatedRequest";
 import { Movie } from "~/@types/models/Movie";
 import { Specie } from "~/@types/models/Specie";
 import TextField from "~/components/atoms/forms/TextField";
 import WithLabel from "~/components/atoms/forms/WithLabel";
-import { StarWarsApiPaginatedRequest } from "~/hooks/useAdonisTable";
 import { api } from "~/services/api";
 
 const genders = [

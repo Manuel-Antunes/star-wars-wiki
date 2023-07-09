@@ -50,7 +50,7 @@ const OpeningCraw: React.FC<OpeningCrawProps> = ({
           transform: "perspective(300px) rotateX(25deg)",
           fontFamily: "Century Gothic, CenturyGothic, AppleGothic, sans-serif",
         }}
-        className="origin-[50%_100%] text-justify absolute ml-[-9em] font-[bold] overflow-hidden text-[350%] h-[50em] w-[18em] left-2/4 bottom-0 after:absolute after:content-['_'] after:top-0 after:bottom-[60%] after:inset-x-0"
+        className="origin-[50%_100%] text-justify absolute ml-[-9em] font-bold overflow-hidden text-[350%] h-[50em] w-[18em] left-2/4 bottom-0 after:absolute after:content-['_'] after:top-0 after:bottom-[60%] after:inset-x-0"
       >
         <div className="text-[#FFFF82] animate-[scroll_100s_linear_16s] absolute top-full">
           <p id="text-center">Episode {romanize(episodeId)}</p>

@@ -1,9 +1,9 @@
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
-import { AdonisTable } from '~/hooks/useAdonisTable';
+import { DataTable } from '~/@types/table/DataTable';
 
 
 interface TablePaginationProps<T> {
-   table: AdonisTable<T>;
+   table: DataTable<T>;
 }
 
 const TablePagination = <T,>({ table }: TablePaginationProps<T>) => {

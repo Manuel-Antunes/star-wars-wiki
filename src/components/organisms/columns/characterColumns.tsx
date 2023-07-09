@@ -92,6 +92,8 @@ export const characterColumns: ColumnDef<Character>[] = [
         id: "species",
         accessorKey: "species",
         header: "Espécie",
+        enableGlobalFilter: true,
+        footer: ({ column: { id } }) => id,
         cell(props) {
           const ids: string[] =
             props.getValue()?.map((url: string) => getIdFromResourceUrl(url)) ||
