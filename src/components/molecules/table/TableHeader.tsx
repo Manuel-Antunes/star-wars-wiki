@@ -22,7 +22,7 @@ const TableHeader = <T,>({ table, children }: TableHeaderProps<T>) => {
 
   //* handlers
   const onSubmit = handleSubmit(formData => {
-    table.setGlobalFilter((data: any) => ({ ...data, ...formData }));
+    table.setGlobalFilter((data: T) => ({ ...data, ...formData }));
   });
 
   const handleReset = useCallback(() => {
