@@ -1,37 +1,64 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Helmet } from "react-helmet";
 import { Link, useParams } from "react-router-dom";
+import { Character } from "~/@types/models/Character";
 import { Movie } from "~/@types/models/Movie";
-import OpeningCraw from "~/components/organisms/OpeningCraw";
-import { useMovieProjection } from "~/hooks/pages/useMovieProjection";
+import { Planet } from "~/@types/models/Planet";
+import { romanize } from "~/helpers/romanize";
 import MainLayout from "~/layouts/MainLayout";
 import {
   api,
-  generateMovieImageFromId,
+  generatePlanetImageFromId,
   getIdFromResourceUrl,
 } from "~/services/api";
 
-const ShowMovie: React.FC = () => {
+const ShowPlanet: React.FC = () => {
   const { id } = useParams();
 
-  const { data: movie } = useQuery<Movie>(
-    ["movies", id],
+  const { data: planet } = useQuery<Planet>(
+    ["planets", id],
     async () => {
-      const response = await api.get(`/films/${id}`);
-      return response.data;
+      const { data } = await api.get(`/planets/${id}`);
+      return data;
     },
     {
       suspense: true,
     }
   );
 
-  const { characters, planets } = useMovieProjection(movie);
+  const residentQueries = useQueries({
+    queries:
+      planet?.residents.map(resident => ({
+        queryKey: ["characters", getIdFromResourceUrl(resident)],
+        queryFn: async () => {
+          const { data } = await api.get(resident);
+          return data;
+        },
+        suspense: true,
+      })) || [],
+  });
+
+  const residents = residentQueries.map(query => query.data as Character);
+
+  const movieQueries = useQueries({
+    queries:
+      planet?.films.map(movie => ({
+        queryKey: ["movies", getIdFromResourceUrl(movie)],
+        queryFn: async () => {
+          const { data } = await api.get(movie);
+          return data;
+        },
+        suspense: true,
+      })) || [],
+  });
+
+  const movies = movieQueries.map(query => query.data as Movie);
 
   return (
     <MainLayout>
       <Helmet>
-        <title>{movie?.title} | Star Wars</title>
+        <title>{planet?.name} | Star Wars</title>
       </Helmet>
       <div className="container mx-auto my-5 p-5">
         <div className="flex md:grid md:grid-cols-6 gap-4 flex-col justify-center no-wrap md:-mx-2 ">
@@ -40,12 +67,12 @@ const ShowMovie: React.FC = () => {
               <div className="image overflow-hidden">
                 <img
                   className="h-auto w-2/3 mx-auto"
-                  src={generateMovieImageFromId(id || "")}
+                  src={generatePlanetImageFromId(id || "")}
                   alt=""
                 />
               </div>
               <h1 className="text-navy-100 text-center font-bold text-xl leading-8 my-1">
-                {movie?.title}
+                {planet?.name}
               </h1>
             </div>
           </div>
@@ -73,28 +100,46 @@ const ShowMovie: React.FC = () => {
               <div className="text-navy-300">
                 <div className="grid md:grid-cols-2 text-sm">
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Título</div>
-                    <div className="px-4 py-2">{movie?.title}</div>
+                    <div className="px-4 py-2 font-semibold">Nome</div>
+                    <div className="px-4 py-2">{planet?.name}</div>
                   </div>
                   <div className="grid grid-cols-2">
                     <div className="px-4 py-2 font-semibold">
-                      ID de Episódio
+                      Período de Rotação
                     </div>
-                    <div className="px-4 py-2">{movie?.episode_id}</div>
+                    <div className="px-4 py-2">{planet?.rotation_period}</div>
                   </div>
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Diretor</div>
-                    <div className="px-4 py-2">{movie?.director}</div>
+                    <div className="px-4 py-2 font-semibold">Diâmetro</div>
+                    <div className="px-4 py-2">{planet?.diameter}</div>
                   </div>
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Produtor</div>
-                    <div className="px-4 py-2">{movie?.producer}</div>
+                    <div className="px-4 py-2 font-semibold">População</div>
+                    <div className="px-4 py-2">{planet?.population}</div>
                   </div>
                   <div className="grid grid-cols-2">
                     <div className="px-4 py-2 font-semibold">
-                      Data do Lançamento
+                      Período de Órbita
                     </div>
-                    <div className="px-4 py-2">{movie?.release_date}</div>
+                    <div className="px-4 py-2">{planet?.orbital_period}</div>
+                  </div>
+                  <div className="grid grid-cols-2">
+                    <div className="px-4 py-2 font-semibold">
+                      Água na Superfície
+                    </div>
+                    <div className="px-4 py-2">{planet?.surface_water}</div>
+                  </div>
+                  <div className="grid grid-cols-2">
+                    <div className="px-4 py-2 font-semibold">Clima</div>
+                    <div className="px-4 py-2">{planet?.climate}</div>
+                  </div>
+                  <div className="grid grid-cols-2">
+                    <div className="px-4 py-2 font-semibold">Terreno</div>
+                    <div className="px-4 py-2">{planet?.terrain}</div>
+                  </div>
+                  <div className="grid grid-cols-2">
+                    <div className="px-4 py-2 font-semibold">Gravidade</div>
+                    <div className="px-4 py-2">{planet?.gravity}</div>
                   </div>
                 </div>
               </div>
@@ -124,8 +169,8 @@ const ShowMovie: React.FC = () => {
                     <span className="tracking-wide">Personagens</span>
                   </div>
                   <ul className="list-inside space-y-2 overflow-y-auto">
-                    {characters.length ? (
-                      characters?.map(character => (
+                    {residents.length ? (
+                      residents?.map(character => (
                         <li key={getIdFromResourceUrl(character.url)}>
                           <Link
                             to={`/characters/${getIdFromResourceUrl(
@@ -163,18 +208,18 @@ const ShowMovie: React.FC = () => {
                         />
                       </svg>
                     </span>
-                    <span className="tracking-wide">Planetas</span>
+                    <span className="tracking-wide">Filmes</span>
                   </div>
                   <ul className="list-inside space-y-2">
-                    {planets.length ? (
-                      planets?.map(planet => (
-                        <li key={getIdFromResourceUrl(planet.url)}>
+                    {movies.length ? (
+                      movies?.map(movie => (
+                        <li key={getIdFromResourceUrl(movie.url)}>
                           <Link
-                            to={`/planets/${getIdFromResourceUrl(planet.url)}`}
+                            to={`/movies/${getIdFromResourceUrl(movie.url)}`}
                           >
-                            <div className="text-teal-600">{planet.name}</div>
+                            <div className="text-teal-600">{movie.title}</div>
                             <div className="text-gray-500 text-xs">
-                              {planet.population} Habitantes
+                              Episódio {romanize(movie.episode_id)}
                             </div>
                           </Link>
                         </li>
@@ -189,17 +234,10 @@ const ShowMovie: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="card p-3 hover:shadow col-span-6 h-[600px]">
-            <OpeningCraw
-              title={movie?.title || ""}
-              content={movie?.opening_crawl || ""}
-              episodeId={movie?.episode_id || 0}
-            />
-          </div>
         </div>
       </div>
     </MainLayout>
   );
 };
 
-export default ShowMovie;
+export default ShowPlanet;

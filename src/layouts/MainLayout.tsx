@@ -23,7 +23,11 @@ const MainLayout: React.FC<PropsWithChildren> = ({ children }) => {
 const Header: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className="flex items-center justify-between py-3 pb-5 lg:pb-6">
-      {children}
+      <div className="flex items-center space-x-1">
+        <h2 className="line-clamp-1 dark:text-navy-50 text-xl font-medium text-slate-700 lg:text-2xl">
+          {children}
+        </h2>
+      </div>
     </div>
   );
 };

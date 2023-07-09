@@ -10,7 +10,7 @@ import {
 
 export const characterColumns: ColumnDef<Character>[] = [
   {
-    id: "myAnalyzes",
+    id: "characters",
     footer: ({ column: { id } }) => id,
     columns: [
       {
@@ -110,13 +110,20 @@ export const characterColumns: ColumnDef<Character>[] = [
               {specieQueries.length ? (
                 specieQueries?.map((specieQuery, index) => {
                   if (specieQuery?.isLoading) {
-                    return <span key={index}>Carregando...</span>;
+                    return (
+                      <span key={index}>
+                        <div className="spinner is-elastic h-7 w-7 animate-spin rounded-full border-[3px] border-primary border-r-transparent dark:border-accent dark:border-r-transparent"></div>
+                      </span>
+                    );
                   }
                   if (specieQuery?.isError) {
                     return <span key={index}>Erro ao carregar</span>;
                   }
                   return (
-                    <div key={index} className="badge bg-primary text-white dark:bg-accent">
+                    <div
+                      key={index}
+                      className="badge bg-primary text-white dark:bg-accent"
+                    >
                       {specieQuery.data.name}
                     </div>
                   );

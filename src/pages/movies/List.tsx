@@ -1,7 +1,7 @@
 import {
   getCoreRowModel,
   getPaginationRowModel,
-  getSortedRowModel
+  getSortedRowModel,
 } from "@tanstack/react-table";
 import { Helmet } from "react-helmet";
 import { FormProvider, useForm } from "react-hook-form";
@@ -29,13 +29,7 @@ const ListMovies = () => {
       <Helmet>
         <title>Filmes | Star Wars</title>
       </Helmet>
-      <MainLayout.Header>
-        <div className="flex items-center space-x-1">
-          <h2 className="line-clamp-1 dark:text-navy-50 text-xl font-medium text-slate-700 lg:text-2xl">
-            Filmes
-          </h2>
-        </div>
-      </MainLayout.Header>
+      <MainLayout.Header>Filmes</MainLayout.Header>
       <div className="w-full flex flex-col gap-5">
         <FormProvider {...form}>
           <TableHeader<Movie> table={table}>

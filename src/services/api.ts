@@ -17,6 +17,11 @@ export const generateMovieImageFromId = (id: number | string) => {
   return `https://starwars-visualguide.com/assets/img/films/${id}.jpg`;
 };
 
+export const generatePlanetImageFromId = (id: number | string) => {
+  return `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`;
+};
+
 export const getIdFromResourceUrl = (url: string) => {
-  return url.split("/").slice(-2)[0];
+  const id = url.split("/").slice(-2)[0];
+  return id;
 };

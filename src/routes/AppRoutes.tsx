@@ -7,6 +7,8 @@ const ShowCharacter = lazy(() => import("~/pages/characters/Show"));
 const NotFound = lazy(() => import("~/pages/errors/NotFound"));
 const ListMovies = lazy(() => import("~/pages/movies/List"));
 const ShowMovie = lazy(() => import("~/pages/movies/Show"));
+const ListPlanet = lazy(() => import("~/pages/planets/List"));
+const ShowPlanet = lazy(() => import("~/pages/planets/Show"));
 const Home = lazy(() => import("~/pages/Home"));
 
 const AppRoutes: React.FC = () => {
@@ -49,6 +51,22 @@ const AppRoutes: React.FC = () => {
         element={
           <SuspendedView>
             <ShowMovie />
+          </SuspendedView>
+        }
+      />
+      <Route
+        path="/planets"
+        element={
+          <SuspendedView>
+            <ListPlanet />
+          </SuspendedView>
+        }
+      />
+      <Route
+        path="/planets/:id"
+        element={
+          <SuspendedView>
+            <ShowPlanet />
           </SuspendedView>
         }
       />
