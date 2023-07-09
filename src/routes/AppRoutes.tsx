@@ -1,12 +1,13 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import Home from '~/pages/Home'
 import ListCharacters from '~/pages/characters/List'
-import ShowCharacter from '~/pages/characters/Show'
-import NotFound from '~/pages/errors/NotFound'
-import ListMovies from '~/pages/movies/List'
-import ShowMovie from '~/pages/movies/Show'
 import LoadingSpinner from '~/partials/LoadingSpinner'
+
+const ShowCharacter = lazy(()=>import('~/pages/characters/Show')) 
+const NotFound = lazy(()=>import('~/pages/errors/NotFound')) 
+const ListMovies = lazy(()=>import('~/pages/movies/List')) 
+const ShowMovie = lazy(()=>import('~/pages/movies/Show')) 
+const Home = lazy(()=>import('~/pages/Home')) 
 
 const AppRoutes:React.FC = () => {
   return (
