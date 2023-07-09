@@ -4,7 +4,6 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
 } from "@tanstack/react-table";
-import { Suspense } from "react";
 import { Helmet } from "react-helmet";
 import { FormProvider, useForm } from "react-hook-form";
 import { Character } from "~/@types/models/Character";
@@ -31,7 +30,7 @@ const ListCharacters = () => {
     undefined,
     data => {
       return data.map(character => {
-        if(character.species.length === 0) {
+        if (character.species.length === 0) {
           return {
             ...character,
             species: [`${API_BASE_URL}/species/1/`],
@@ -61,13 +60,7 @@ const ListCharacters = () => {
       <div className="w-full flex flex-col gap-5">
         <FormProvider {...form}>
           <TableHeader<Character> table={table}>
-            <Suspense
-              fallback={
-                <span className="text-sm font-semibold">Carregando...</span>
-              }
-            >
-              <CharacterFilters />
-            </Suspense>
+            <CharacterFilters />
           </TableHeader>
         </FormProvider>
         <div className="w-full card mt-3">
