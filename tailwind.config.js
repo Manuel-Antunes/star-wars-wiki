@@ -147,9 +147,9 @@ module.exports = {
         },
       },
       backgroundImage: {
-        "bg-404": "url('./src/assets/images/illustrations/ufo-bg.svg')",
+        "bg-404": "url('/src/assets/images/illustrations/ufo-bg.svg')",
         "bg-404-dark":
-          "url('./src/assets/images/illustrations/ufo-bg-dark.svg')",
+          "url('/src/assets/images/illustrations/ufo-bg-dark.svg')",
       },
     },
   },
